@@ -28,9 +28,10 @@ function handleSubmit() {
 
   // TODO: Prevent the page from reloading
   event.preventDefault();
-
+ 
   // Do all the things ...
   addSelectedItemToCart(event);
+  document.getElementById("catalog").reset();
   cart.saveToLocalStorage();
   updateCounter();
   updateCartPreview();
@@ -62,19 +63,24 @@ function updateCounter() {
   counter.appendChild(pSpan);
 
 }
-
+var selectElement = document.getElementById("cartContents");
+var ulElement = document.createElement('ul');
+var liElement;
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
 function updateCartPreview() {
   // TODO: Get the item and quantity from the form
   var test = JSON.parse(localStorage.getItem('items'))
   console.log(test);
   // TODO: Add a new element to the cartContents div with that information
-  var selectElement = document.getElementById(cartContents);
-  var ulElement = document.createElement('ul');
  
+  // var selectElement = document.getElementById("cartContents");
+  // var ulElement = document.createElement('ul');
+  while (ulElement.hasChildNodes()) {  
+    ulElement.removeChild(ulElement.firstChild);
+  } 
   for(var i=0 ; i < CartItemList.length ; i++){
-    var liElement = document.createElement('li');
-    liElement.textContent = CartItemList[i].product;
+     liElement = document.createElement('li');
+    liElement.textContent = CartItemList[i].product+" "+ CartItemList[i].quantity;
     
     ulElement.appendChild(liElement);
   }
