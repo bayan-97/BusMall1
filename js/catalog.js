@@ -20,7 +20,6 @@ function populateForm() {
   }
 
 }
-
 // When someone submits the form, we need to add the selected item to the cart
 // object, save the whole thing back to local storage and update the screen
 // so that it shows the # of items in the cart and a quick preview of the cart itself.
@@ -28,9 +27,27 @@ function handleSubmit() {
 
   // TODO: Prevent the page from reloading
   event.preventDefault();
-
+ 
   // Do all the things ...
+  var alertElement = document.querySelector('footer');
+  while (alertElement.hasChildNodes()) {  
+    alertElement.removeChild(alertElement.firstChild);
+  } 
+  var divAlert = document.createElement('div');
+  divAlert.setAttribute('class', "alertTest");
+  divAlert.textContent = 'You have added an item to your cart shop ';
+  var linkAlert = document.createElement('a');
+  linkAlert.setAttribute('href', "http://test.com");
+  linkAlert.textContent = "Click to go to cart";
+  divAlert.appendChild(linkAlert);
+
+  // var linkAlert = document
+  alertElement.appendChild(divAlert);
+  
+
+
   addSelectedItemToCart(event);
+  document.getElementById("catalog").reset();
   cart.saveToLocalStorage();
   updateCounter();
   updateCartPreview();
@@ -55,32 +72,44 @@ function addSelectedItemToCart(event) {
 // TODO: Update the cart count in the header nav with the number of items in the Cart
 var counterSum = 0;
 function updateCounter() {
+  
   var counter = document.getElementById('itemCount');
   counterSum += 1;
+  while (counter.hasChildNodes()) {  
+    counter.removeChild(counter.firstChild);
+  } 
   var pSpan = document.createElement('p');
   pSpan.textContent = '('+counterSum+')'; 
   counter.appendChild(pSpan);
 
 }
-
+var selectElement = document.getElementById("cartContents");
+var ulElement = document.createElement('ul');
+var liElement;
 // TODO: As you add items into the cart, show them (item & quantity) in the cart preview div
 function updateCartPreview() {
   // TODO: Get the item and quantity from the form
-  var test = JSON.parse(localStorage.getItem('items'))
-  console.log(test);
+  var previousItems = JSON.parse(localStorage.getItem('items'))
   // TODO: Add a new element to the cartContents div with that information
-  var selectElement = document.getElementById(cartContents);
-  var ulElement = document.createElement('ul');
+  updateItemsObj(previousItems);
  
+  while (ulElement.hasChildNodes()) {  
+    ulElement.removeChild(ulElement.firstChild);
+  } 
   for(var i=0 ; i < CartItemList.length ; i++){
-    var liElement = document.createElement('li');
-    liElement.textContent = CartItemList[i].product;
+     liElement = document.createElement('li');
+    liElement.textContent = CartItemList[i].product+" "+ CartItemList[i].quantity;
     
     ulElement.appendChild(liElement);
   }
   selectElement.appendChild(ulElement);
+}
 
-
+function updateItemsObj(previousItems) {
+  for (let index = 0; index < CartItemList.length; index++) {
+    CartItemList[index].product = previousItems[index].product;
+    CartItemList[index].quantity = previousItems[index].quantity;
+    }
 }
 
 // Set up the "submit" event listener on the form.

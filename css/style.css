@@ -2,3 +2,54 @@
 body {
     margin-left: 10px;
 }
+
+/* The alert message box */
+@keyframes alertTest {
+    0% {
+      left: 0;
+      top: 0;
+    }
+    50% {
+      left: 244px;
+      top: 100px;
+    }
+    100% {
+      left: 488px;
+      top: 0;
+    }
+  }
+
+
+.alertTest {
+    padding: 20px;
+    background-color: #f44336; /* Red */
+    color: white;
+    margin-bottom: 15px;
+  }
+  
+  .alertTest:hover {
+    animation: slide 2s linear;
+  }
+
+  /* The close button */
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  /* When moving the mouse over the close button */
+  .closebtn:hover {
+    color: black;
+  }
+
+
+  img {
+      width: 30px;
+      height: 30px;
+  }
